@@ -17,3 +17,7 @@
 ## Notes
 
 - The server can be started by running `npm start`.
+
+- You can create `.env` to store your values for `DEBUG` and `PORT`.
+
+- Any value of `DEBUG` other than `false` will enable debug mode.
