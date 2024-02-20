@@ -7,13 +7,11 @@ import morgan from "morgan"
 const Server = (() => {
     // load environment variables
     dotenv.config({ path: './config.env' })
+    const DEBUG = process.env.DEBUG || 'false'
+    const PORT = process.env.PORT || 5000
 
     // instantiate Express.js
     const app = express()
-
-    // environment variables
-    const DEBUG = process.env.DEBUG || 'false'
-    const PORT = process.env.PORT || 5000
 
     // development logger: "Morgan"
     if(DEBUG !== 'false') app.use(morgan('dev'))
