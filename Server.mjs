@@ -14,7 +14,7 @@ const Server = (() => {
     const app = express()
 
     // development logger: "Morgan"
-    const logStream = fs.WriteStream('../log.csv', { flags: 'a' })
+    const logStream = fs.WriteStream('./log.csv', { flags: 'a' })
     app.use(morgan(':method,:url,:status,:response-time ms', { stream: logStream }))
 
     // start the server
