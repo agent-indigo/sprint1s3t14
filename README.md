@@ -2,7 +2,7 @@
 
 ## Semester 3
 
-## PERN Full Stack
+## Node.js CLI App
 
 ## Team 14
 
