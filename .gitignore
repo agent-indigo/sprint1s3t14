@@ -4,5 +4,5 @@ node_modules/
 **/.DS_Store
 # environment variables
 **/*.env*
-# logs
-**/*log*
+# log
+log.csv
