@@ -5,6 +5,4 @@ node_modules/
 # environment variables
 **/*.env*
 # logs
-**/*.csv*
-**/*.log*
-**/*.tsv*
+**/*log*
