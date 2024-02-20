@@ -1,9 +1,13 @@
 // import modules here
 import express from "express"
+import dotenv from 'dotenv'
 import morgan from "morgan"
 
 // write all of your code inside this function expression
 const Server = (() => {
+    // load environment variables
+    dotenv.config({ path: './config.env' })
+
     // instantiate Express.js
     const app = express()
 
