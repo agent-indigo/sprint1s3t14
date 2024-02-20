@@ -23,7 +23,7 @@ const Server = (() => {
     })
 
     // handle promise rejections
-    process.on('unhandledRejection', (error, promise) => {
+    process.on('unhandledRejection', error => {
         console.error(`Error: ${error.message}`)
         // close server & exit process
         app.close(() => process.exit(1))
