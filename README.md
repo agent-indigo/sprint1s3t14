@@ -16,8 +16,4 @@
 
 ## Notes
 
-- The React.js GUI can be started by running `npm start`.
-
-- The Express.js server can be started by running `npm run server`.
-
-- Both of the above can be started simultaneously by running `npm run stack`.
+- The server can be started by running `npm start`.
