@@ -1,12 +1,10 @@
-
-const help = [
-    "Usage: node app.js token [options]",
-
-    "Options:",
-    "  --help       Display this help message",
-]
-
-const run = (args) => {
+const Token = args => {
+    const help = [
+        "Usage: node app.js token [options]",
+    
+        "Options:",
+        "  --help       Display this help message",
+    ]
     switch (args[0]) {
         case "-h":
         case "--help":
@@ -15,5 +13,4 @@ const run = (args) => {
             return console.log("Command not found");
     }
 }
-
-module.exports = run
+export default Token
