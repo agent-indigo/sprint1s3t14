@@ -3,7 +3,6 @@ import 'dotenv/config'
 import express from 'express'
 import fs from 'fs'
 import morgan from "morgan"
-import path from 'path'
 
 // write all of your code inside this function expression
 const Server = (() => {
@@ -15,8 +14,8 @@ const Server = (() => {
     const app = express()
 
     // development logger: "Morgan"
-    const logStram = fs.WriteStream(path.join(path.dirname, 'log.csv'), { flags: 'a' })
-    app.use(morgan(':method,:url,:status,:response-time ms', { stream: logStram }))
+    const logStream = fs.WriteStream('../log.csv', { flags: 'a' })
+    app.use(morgan(':method,:url,:status,:response-time ms', { stream: logStream }))
 
     // start the server
     app.listen(PORT, () => {
