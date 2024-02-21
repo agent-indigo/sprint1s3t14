@@ -2,7 +2,7 @@ import Config from "./app/Config.mjs"
 import Help from "./app/Help.mjs"
 import Init from "./app/Init.mjs"
 import Token from "./app/Token.mjs"
-const app = () => {
+const app = (() => {
     const args = process.argv.slice(2);
     const commands = {
         "-h": Help,
@@ -17,5 +17,5 @@ const app = () => {
     } else {
         console.log("Command not found");
     }
-}
+})()
 export default app
