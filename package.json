@@ -1,5 +1,6 @@
 {
   "main": "Server.mjs",
+  "type": "module",
   "dependencies": {
     "crc": "^4.3.2",
     "dotenv": "^16.4.5",
