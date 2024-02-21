@@ -2,7 +2,11 @@
 node_modules/
 # misc
 **/.DS_Store
+# JetBrains WebStorm (I use this IDE)
+.idea
 # environment variables
 **/*.env*
 # log
 log.csv
+# data
+json/
