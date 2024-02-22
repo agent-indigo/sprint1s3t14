@@ -4,9 +4,9 @@ import 'dotenv/config'
 import express from 'express'
 import fs from 'fs'
 import morgan from "morgan"
-import Token from './app/Token'
-import AsyncHandler from './AsyncHandler'
-import ErrorResponse from './ErrorResponse'
+import Token from './app/Token.mjs'
+import AsyncHandler from './AsyncHandler.mjs'
+import ErrorResponse from './ErrorResponse.mjs'
 // write all of your code inside this function expression
 const Server = (() => {
     // load environment variables
@@ -17,7 +17,7 @@ const Server = (() => {
     const app = express()
 
     // use express.json & cookieParser
-    app.use(express.json(), cookieParser)
+    app.use(express.json(), cookieParser())
 
     // development logger: "Morgan"
     const logStream = fs.WriteStream('./log.csv', { flags: 'a' })
