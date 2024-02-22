@@ -1,4 +1,4 @@
-import { randomBytes } from 'crypto'
+import { crc32 } from 'crc'
 import { format, addDays } from 'date-fns'
 import { readFile, writeFile } from 'fs/promises'
 import Help from './Help.mjs'
@@ -6,7 +6,7 @@ import path from 'path'
 const Token = async args => {
     const tokensPath = path.join(path.dirname, 'json', 'tokens.json')
     const generateSecureToken = length => {
-        return randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
+        return crc32(Math.ceil(length / 2)).toString('hex').slice(0, length)
     }
     const listTokens = async () => {
         try {
