@@ -25,7 +25,7 @@ const Server = (() => {
     app.use(morgan(':method,:url,:status,:response-time ms', { stream: logStream }))
 
     // login route
-    const login = app.post('/api/login', AsyncHandler(async (request, response, next) => {
+    const login = () => app.post('/api/login', AsyncHandler(async (request, response, next) => {
         const { username } = request.body
         if (!username) return next(ErrorResponse('No username entered.', 404))
         const token = await Token(['--new', username])
@@ -39,7 +39,7 @@ const Server = (() => {
     }))
 
     // show token route
-    const showToken = app.get('/api/token', (request, response, next) => {
+    const showToken = () => app.get('/api/token', (request, response, next) => {
         const token = request.cookies.token
         if(!token) {
             return next(ErrorResponse('Token not found.', 404))

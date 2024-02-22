@@ -4,10 +4,7 @@ import { readFile, writeFile } from 'fs/promises'
 import Help from './Help.mjs'
 import path from 'path'
 const Token = async args => {
-    const tokensPath = path.join(path.dirname, 'json', 'tokens.json')
-    const generateSecureToken = length => {
-        return crc32(Math.ceil(length / 2)).toString('hex').slice(0, length)
-    }
+    const tokensPath = path.join(path.dirname(), 'json', 'tokens.json')
     const listTokens = async () => {
         try {
             const data = await readFile(tokensPath, 'utf-8')
@@ -30,7 +27,7 @@ const Token = async args => {
                 username: username,
                 email: 'user@example.com',
                 phone: '5556597890',
-                token: generateSecureToken(16),
+                token: crc32(username).toString(16),
                 expires: format(expiry, dateFormat),
                 confirmed: 'tbd',
             }
