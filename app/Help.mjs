@@ -1,10 +1,10 @@
-const Help = args => {
-    const help = [
-        "Usage: node app.js [options]",
-        "",
-        "Options:",
-        "  --help       Display this help message",
-    ]
-    console.log(help.join("\n"))
+import fs from 'fs'
+const Help = () => {
+    try {
+        const data = fs.readFileSync('./manual.txt', 'utf8')
+        console.log(data)
+    } catch (error) {
+        console.error(`Error reading file: ${error}`)
+    }
 }
 export default Help
