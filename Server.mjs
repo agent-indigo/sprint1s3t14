@@ -7,6 +7,7 @@ import morgan from "morgan"
 import Token from './app/Token.mjs'
 import AsyncHandler from './AsyncHandler.mjs'
 import ErrorResponse from './ErrorResponse.mjs'
+import Api from "./http/Api.mjs";
 // write all of your code inside this function expression
 const Server = (() => {
     // load environment variables
@@ -49,6 +50,8 @@ const Server = (() => {
             })
         }
     })
+
+    Api(app)
 
     // start the server
     app.listen(PORT, () => {
