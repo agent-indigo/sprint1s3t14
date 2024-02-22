@@ -1,8 +1,12 @@
-import fs from 'fs'
+import fs from "fs"
+import path from "path";
+import { mainDir } from "../common/Utils.mjs";
+
+const manualFile = path.join(mainDir, "app", "manual.txt");
+
 const Help = () => {
     try {
-        const data = fs.readFileSync('./manual.txt', 'utf8')
-        console.log(data)
+        console.log(fs.readFileSync(manualFile, "utf8"))
     } catch (error) {
         console.error(`Error reading file: ${error}`)
     }
