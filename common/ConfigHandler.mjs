@@ -3,7 +3,7 @@ import path from "path";
 import { mainDir } from "./Utils.mjs";
 
 const defaultConfig = {
-    port: 3000,
+    admins: ""
 }
 
 const configDir = path.join(mainDir, "json");
