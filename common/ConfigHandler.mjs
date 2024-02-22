@@ -43,10 +43,13 @@ const set = (key, value) => {
 
 /**
  * Initialize the config file.
+ * @return boolean True if the config file was created, false if it already existed.
  * @throws {Error} Will throw an error if the config directory was not created.
  */
 const init = () => {
+    const existed = fs.existsSync(configFile);
     write(defaultConfig);
+    return !existed;
 }
 
 export default {
