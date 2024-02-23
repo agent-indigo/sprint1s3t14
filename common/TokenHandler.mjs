@@ -51,13 +51,13 @@ const write = (entries) => {
 /**
  * Adds and returns a new user and token for a given username.
  * @param username {string} The username to create a token for.
- * @return {string} The token for the given username.
+ * @return {[string,Date]}
  */
 const create = (username) => {
     const token = crc32(username).toString(16);
     const in3days = nowPlusDays(EXPIRY_IN_DAYS);
 
-    if (!update(token, {expires: format(in3days, DATE_FORMAT)})) {
+    if (!update("token", token, {expires: format(in3days, DATE_FORMAT)})) {
         const entries = read();
         entries.push({
             created: format(new Date(), DATE_FORMAT),
@@ -68,17 +68,18 @@ const create = (username) => {
         });
         write(entries);
     }
-    return token;
+    return [token, in3days];
 }
 
 /**
- * @param token {string}
+ * @param key {string} The key to search entries by
+ * @param value {string} The value of the key that is being searched by
  * @param data {any | TokenEntry}
  * @return {boolean} True if the token was found and updated, false otherwise.
  */
-const update = (token, data) => {
+const update = (key, value, data) => {
     const entries = read();
-    const entryIndex = entries.findIndex(t => t.token === token);
+    const entryIndex = entries.findIndex(t => t[key] === value);
     if (entryIndex !== -1) {
         // Merges the existing token data with the new data.
         // This means that the new data will overwrite the old data, but the old data will remain if not overwritten.
@@ -92,8 +93,23 @@ const update = (token, data) => {
     return false;
 }
 
+/**
+ * @param key {string} The key to search entries by
+ * @param value The value of the key that is being searched by
+ * @return {TokenEntry} The found token entry, if undefined the entry was not found.
+ **/
+const search = (key, value) => {
+    const entries = read();
+    const entryIndex = entries.findIndex(t => t[key] === value);
+    if (entryIndex !== -1) {
+        return entries[entryIndex];
+    }
+    return undefined;
+}
+
 export default {
     get: read,
     create: create,
     update: update,
+    search: search,
 }
