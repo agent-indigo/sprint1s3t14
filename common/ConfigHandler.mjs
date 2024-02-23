@@ -1,13 +1,24 @@
 import fs from "fs";
 import path from "path";
-import { mainDir } from "./Utils.mjs";
+import { mainDir, tryCatch } from "./Utils.mjs";
+import { EventEmitter } from "events";
 
 const defaultConfig = {
-    admins: ""
+    admins: "",
+    debug: "false",
 }
 
 const configDir = path.join(mainDir, "json");
 const configFile = path.join(configDir, "config.json");
+
+const emitter = new EventEmitter();
+
+tryCatch("Error trying to get initial config", () => {
+    if (fs.existsSync(configDir)) {
+        const config = JSON.parse(fs.readFileSync(configFile, "utf8"));
+        emitter.emit("update", config);
+    }
+});
 
 /**
  * Reads the config file.
@@ -18,7 +29,20 @@ const read = () => {
     if (!fs.existsSync(configFile)) {
         throw new Error("Config was not initialized");
     }
-    return JSON.parse(fs.readFileSync(configFile, "utf8"));
+    const config = JSON.parse(fs.readFileSync(configFile, "utf8"));
+    return { ...defaultConfig, ...config };
+}
+
+/**
+ * Get a value from the config file.
+ * @template T The type of the value.
+ * @param key {string} The key to get.
+ * @param [fallback] {T} The value to return if the key does not exist.
+ * @return {T} The value of the key.
+ */
+const get = (key, fallback) => {
+    const config = read();
+    return config[key] || fallback;
 }
 
 /**
@@ -34,11 +58,14 @@ const write = (config) => {
  * Set a key to a value in the config file.
  * @param key {string} The key to set.
  * @param value {any} The value to set.
+ * @return {any} The new config.
  */
 const set = (key, value) => {
     const config = read();
     config[key] = value;
     write(config);
+    emitter.emit("update", config);
+    return config;
 }
 
 /**
@@ -49,11 +76,14 @@ const set = (key, value) => {
 const init = () => {
     const existed = fs.existsSync(configFile);
     write(defaultConfig);
+    emitter.emit("update", defaultConfig);
     return !existed;
 }
 
 export default {
-    get: read,
+    read: read,
+    get: get,
     set: set,
     init: init,
+    on: emitter.on.bind(emitter),
 }
