@@ -1,5 +1,6 @@
 import Help from "./Help.mjs"
 import ConfigHandler from "../common/ConfigHandler.mjs";
+import { tryCatch } from "../common/Utils.mjs";
 
 const show = () => {
     const config = ConfigHandler.get();
@@ -25,10 +26,10 @@ const Config = args => {
     switch (args[0]) {
         case "-h":
         case "--help": return Help();
-        case "--show": return show();
-        case "--reset": return reset();
-        case "--set": return set(args[1], args[2]);
-        default: return console.error("Command not found.");
+        case "--show": return tryCatch("Error showing config", show);
+        case "--reset": return tryCatch("Error resetting config", reset);
+        case "--set": return tryCatch("Error setting config", set, args[1], args[2]);
+        default: return console.error("Unknown command, use --help for more information");
     }
 }
 export default Config

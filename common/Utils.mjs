@@ -21,3 +21,20 @@ export const nowPlusDays = (days) => {
     date.setDate(date.getDate() + days);
     return date;
 }
+
+/**
+ * Executes the given function and catches any errors, logging them to the console.
+ * @param message {string} The message to log if an error occurs.
+ * @param fn {function} The function to execute.
+ * @param args {...*} The arguments to pass to the function.
+ * @return {*} The result of the function, or undefined if an error occurred.
+ */
+export const tryCatch = (message, fn, ...args) => {
+    try {
+        return fn(...args);
+    } catch (e) {
+        // TODO replace with proper logging, and give the user just the message and a reference number (LOG ID).
+        console.error(message);
+        console.error(e);
+    }
+}

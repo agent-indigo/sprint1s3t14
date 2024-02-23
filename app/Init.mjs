@@ -3,7 +3,7 @@ import path from "path";
 
 import Help from "./Help.mjs"
 import ConfigHandler from "../common/ConfigHandler.mjs";
-import { mainDir } from "../common/Utils.mjs";
+import { mainDir, tryCatch } from "../common/Utils.mjs";
 
 const jsonDirectory = path.join(mainDir, "json");
 
@@ -31,9 +31,9 @@ const Init = args => {
     switch (args[0]) {
         case "-h":
         case "--help": return Help();
-        case "--all": return all();
-        case "--dir": return dir();
-        case "--conf": return conf();
+        case "--all": return tryCatch("Error creating directories and config file", all);
+        case "--dir": return tryCatch("Error creating directories", dir);
+        case "--conf": return tryCatch("Error creating config file", conf);
         default: return console.error("Unknown command, use --help for more information");
     }
 }
