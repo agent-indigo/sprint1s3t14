@@ -198,4 +198,13 @@ SELECT *
 FROM order_items_count
 RETURNING *
 ;
-
+-- update price for menu items
+ UPDATE order_item
+ SET 
+ unit_price =
+  CASE 
+  	WHEN menu_item_id =3 then (SELECT price FROM menu_item WHERE menu_item_id = 3)
+  	WHEN menu_item_id =5 then (SELECT price FROM menu_item WHERE menu_item_id = 5)
+  END
+WHERE menu_item_id IN (3, 5)
+;
