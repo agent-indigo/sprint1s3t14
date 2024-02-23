@@ -6,7 +6,7 @@ import TokenHandler from "../../common/TokenHandler.mjs";
  * @param res {express.Response}
  */
 export default (req, res) => {
-    const {username} = req.body
+    const {username, phone, email} = req.body
     if (!username) {
         res.status(STATUS_CODE_BAD_REQUEST).json({
             success: false,
@@ -14,6 +14,11 @@ export default (req, res) => {
         })
     } else {
         const [token, expiryDate] = TokenHandler.create(username)
+        TokenHandler.update("token", token, {
+            phone,
+            email,
+            confirmed: true
+        });
         // Set the token as a cookie with expiry
         res.cookie('token', token, {expires: expiryDate, httpOnly: true})
         res.status(STATUS_CODE_OK).json({
