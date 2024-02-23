@@ -82,7 +82,6 @@ ADD CONSTRAINT chk_price_positive CHECK (total_amount > 0);
 ALTER TABLE orders 
 ALTER COLUMN order_date TYPE TIMESTAMP;
 
-
 --- order items
 CREATE TABLE IF NOT EXISTS order_item (
     order_item serial PRIMARY KEY
@@ -164,3 +163,39 @@ CREATE TABLE IF NOT EXISTS composite_menu_ingredients (
     ,CONSTRAINT fkey_ingredients FOREIGN KEY (ingredients_id) REFERENCES ingredients(ingredients_id)
     ,CONSTRAINT fkey_menu_item FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id)
 );
+
+-- purchases table
+CREATE TABLE IF NOT EXISTS purchases 
+(
+	purchase_id serial PRIMARY KEY
+	,order_id INT NOT NULL
+	,customer_id INT NOT NULL
+	,payment_date TIMESTAMP NOT NULL
+	,quantity_purchased INT NOT NULL 
+	,total_order_amount DECIMAL(10,2) NOT NULL
+	,discount_applied DECIMAL (10,2)
+	,discount_price DECIMAL (10,2)
+	,total_hst DECIMAL(10,2) NOT NULL
+	,payment_amount DECIMAL(10,2) NOT NULL
+	,CONSTRAINT Fkey_customer FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+	,CONSTRAINT Fkey_orders FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+-- add a check constraint to purchases
+ALTER TABLE purchases
+ADD CONSTRAINT chk_price_positive CHECK (total_order_amount > 0);
+
+-- payment table
+CREATE TABLE IF NOT EXISTS payment_details (
+	payment_id serial PRIMARY KEY
+	,customer_id INT NOT NULL
+	,order_id INT NOT NULL
+	,total_amount DECIMAL(10,2)
+	,payment_method VARCHAR (50)
+	,payment_date TIMESTAMP NOT NULL
+	,CONSTRAINT Fkey_customer FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+	,CONSTRAINT Fkey_orders FOREIGN KEY (order_id) REFERENCES orders(order_id)
+)
+-- add a check constraint to payment details
+ALTER TABLE payment_details
+ADD CONSTRAINT chk_price_positive CHECK (total_amount > 0);
+
