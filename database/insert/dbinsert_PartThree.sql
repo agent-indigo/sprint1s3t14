@@ -1,5 +1,5 @@
 
--- select items which were orderd most based on their count 
+-- insert into purchases enitity
 WITH order_items AS
 (
 SELECT 
