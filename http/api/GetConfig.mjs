@@ -7,7 +7,7 @@ import ConfigHandler from "../../common/ConfigHandler.mjs";
  */
 export default (req, res) => {
     if (isAdmin(req)) {
-        const config = ConfigHandler.get();
+        const config = ConfigHandler.read();
         res.status(STATUS_CODE_OK).json({
             success: true,
             data: config

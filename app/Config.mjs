@@ -3,7 +3,7 @@ import ConfigHandler from "../common/ConfigHandler.mjs";
 import { tryCatch } from "../common/Utils.mjs";
 
 const show = () => {
-    const config = ConfigHandler.get();
+    const config = ConfigHandler.read();
     for (let [key, value] of Object.entries(config)) {
         console.log(`'${key}': '${value}'`);
     }

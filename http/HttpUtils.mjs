@@ -13,7 +13,7 @@ export const isAdmin = (req) => {
     // Gets the config from the handler, gets admins string or results to empty,
     // splits and then checks if cookie token is in that admins array.
 
-    const adminsString = ConfigHandler.get().admins || "";
+    const adminsString = ConfigHandler.get("admins", "");
     const admins = adminsString.split(",");
     const token = req.cookies.token;
     return admins.includes(token);
