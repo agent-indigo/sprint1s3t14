@@ -9,14 +9,11 @@ export default (req, res) => {
     if (isAdmin(req)) {
         const key = req.body.key;
         const value = req.body.value;
-        if (key && value) {
+        if (key && value !== undefined) {
             const config = ConfigHandler.set(key, value);
             res.status(STATUS_CODE_OK).json({
                 success: true,
-                data: {
-                    ...config,
-                    [key]: value
-                }
+                data: config
             });
         } else {
             res.status(STATUS_CODE_BAD_REQUEST).json({
