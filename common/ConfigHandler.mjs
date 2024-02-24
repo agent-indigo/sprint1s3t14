@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { mainDir, tryCatch } from "./Utils.mjs";
+import ErrorHandler from "./ErrorHandler.mjs";
 import { EventEmitter } from "events";
 
 const defaultConfig = {
@@ -27,7 +28,7 @@ tryCatch("Error trying to get initial config", () => {
  */
 const read = () => {
     if (!fs.existsSync(configFile)) {
-        throw new Error("Config was not initialized");
+        return ErrorHandler("ConfigHandler", "Config was not initialized.");
     }
     const config = JSON.parse(fs.readFileSync(configFile, "utf8"));
     return { ...defaultConfig, ...config };

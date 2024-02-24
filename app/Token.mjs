@@ -1,6 +1,7 @@
 import Help from "./Help.mjs";
 import TokenHandler from "../common/TokenHandler.mjs";
 import { tryCatch } from "../common/Utils.mjs";
+import ErrorHandler from "../common/ErrorHandler.mjs";
 
 const UPDATE_TYPES = {
     email: "email",
@@ -20,40 +21,40 @@ const list = async () => {
 };
 
 const create = async username => {
-    if (!username) return console.error("All arguments must be provided, please refer to token --help");
+    if (!username) return ErrorHandler("Token", "All arguments must be provided, please refer to token --help");
     const [token] = TokenHandler.create(username);
     console.log(`New token successfully created for ${username}, token: ${token}`);
 };
 
 const update = async (username, type, value) => {
     if (!type || !value) {
-        return console.error("All arguments must be provided, please refer to token --help");
+        return ErrorHandler("Token", "All arguments must be provided, please refer to token --help");
     }
     if (!UPDATE_TYPES.hasOwnProperty(type)) {
-        return console.error(`Invalid type: ${type}, allowed types: ${Object.keys(UPDATE_TYPES).join(", ")}`);
+        return ErrorHandler("Token", `Invalid type: ${type}, allowed types: ${Object.keys(UPDATE_TYPES).join(", ")}`);
     }
     type = UPDATE_TYPES[type];
     const updatedData = {[type]: value};
     if (TokenHandler.update("username", username, updatedData)) {
         console.log(`Token updated successfully for ${type}: ${value}.`);
     } else {
-        console.error(`Token not found for username: ${username}.`);
+        ErrorHandler("Token", `Token not found for username: ${username}.`);
     }
 };
 
 const search = async (type, value) => {
     if (!type || !value) {
-        return console.error("All arguments must be provided, please refer to token --help");
+        return ErrorHandler("Token", "All arguments must be provided, please refer to token --help");
     }
     if (!SEARCH_TYPES.hasOwnProperty(type)) {
-        return console.error(`Invalid type: ${type}, allowed types: ${Object.keys(SEARCH_TYPES).join(", ")}`);
+        return ErrorHandler("Token", `Invalid type: ${type}, allowed types: ${Object.keys(SEARCH_TYPES).join(", ")}`);
     }
     type = SEARCH_TYPES[type];
     const entry = TokenHandler.search(type, value);
     if (entry) {
         return console.log(`Token found: ${JSON.stringify(entry, null, 4)}.`);
     } else {
-        return console.error(`Token not found for ${type}: ${value}.`);
+        return ErrorHandler("Token", `Token not found for ${type}: ${value}.`);
     }
 };
 
