@@ -1,5 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import 'dotenv/config';
+import ErrorHandler from './ErrorHandler.mjs';
 
 const __filename = fileURLToPath(import.meta.url); // Gets the filename and dirname of the current module.
 const __dirname = path.dirname(__filename); // Reduces down to just the directory name.
@@ -34,7 +36,7 @@ export const tryCatch = (message, fn, ...args) => {
         return fn(...args);
     } catch (e) {
         // TODO replace with proper logging, and give the user just the message and a reference number (LOG ID).
-        console.error(message);
-        console.error(e);
+        ErrorHandler(fn, message);
+        if (process.env.DEBUG !== 'false') console.error(e);
     }
 }
