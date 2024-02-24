@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="config.css">
+    <title> Config Admin </title>
+</head>
+<body>
+<h1>Admin Config Panel</h1>
+<div id="panel" class="panel">
+    <div class="panel-inputs">
+        <label for="key">Key:</label>
+        <input id="key" type="text" placeholder="key"/>
+        <label for="value">Value:</label>
+        <input id="value" type="text" placeholder="value"/>
+        <button id="submit-button" type="button" class="btn btn-primary">Add/Edit</button>
+    </div>
+    <table>
+        <tbody id="values">
+        <tr>
+            <th class="keys">Key</th>
+            <th class="values">Value</th>
+            <th class="actions"></th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="/scripts/config.js"></script>
+</html>

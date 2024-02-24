@@ -57,12 +57,21 @@ const write = (config) => {
 /**
  * Set a key to a value in the config file.
  * @param key {string} The key to set.
- * @param value {any} The value to set.
+ * @param value {any} The value to set, or null to delete the key.
  * @return {any} The new config.
  */
 const set = (key, value) => {
-    const config = read();
-    config[key] = value;
+    let config = read();
+    if (value === null) {
+        delete config[key];
+        // Ensure that the default keys are not removed by the user.
+        config = {
+            ...defaultConfig,
+            ...config,
+        }
+    } else {
+        config[key] = value;
+    }
     write(config);
     emitter.emit("update", config);
     return config;
