@@ -1,11 +1,12 @@
 import fs from "fs"
 import path from "path";
 import { mainDir, tryCatch } from "../common/Utils.mjs";
+import ErrorHandler from "../common/ErrorHandler.mjs";
 
 const manualFile = path.join(mainDir, "app", "manual.txt");
 
 const Help = () => {
-    tryCatch("Error reading manual", () => {
+    tryCatch(ErrorHandler("Help", "Error reading manual"), () => {
         console.log(fs.readFileSync(manualFile, "utf8"));
     });
 }
