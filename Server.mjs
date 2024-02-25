@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import express from "express";
 import Api from "./http/Api.mjs";
+import RouteLogging from "./http/RouteLogging.mjs";
 
 // load environment variables
 const DEBUG = process.env.DEBUG || "false";
@@ -14,6 +15,7 @@ const app = express();
 // use express.json & cookieParser
 app.use(express.json(), cookieParser());
 
+RouteLogging(app);
 Api(app);
 
 // start the server

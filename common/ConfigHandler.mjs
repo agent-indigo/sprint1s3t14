@@ -1,38 +1,29 @@
 import fs from "fs";
 import path from "path";
-import { mainDir, tryCatch } from "./Utils.mjs";
-import ErrorHandler from "./ErrorHandler.mjs";
+import { mainDir } from "./Utils.mjs";
 import { EventEmitter } from "events";
 
 const defaultConfig = {
-    admins: "",
-    debug: "false",
-}
+    admins: "880e0d76", // Token for 'admin' user.
+    logRoutes: "false", // Whether to log all routes to the console. Including the method and path.
+};
 
 const configDir = path.join(mainDir, "json");
 const configFile = path.join(configDir, "config.json");
 
 const emitter = new EventEmitter();
 
-tryCatch("Error trying to get initial config", () => {
-    if (fs.existsSync(configDir)) {
-        const config = JSON.parse(fs.readFileSync(configFile, "utf8"));
-        emitter.emit("update", config);
-    }
-});
-
 /**
  * Reads the config file.
  * @return {any}
- * @throws {Error} Will throw an error if the config file was not initialized.
  */
 const read = () => {
     if (!fs.existsSync(configFile)) {
-        return ErrorHandler("ConfigHandler", "Config was not initialized.");
+        return {...defaultConfig};
     }
     const config = JSON.parse(fs.readFileSync(configFile, "utf8"));
-    return { ...defaultConfig, ...config };
-}
+    return {...defaultConfig, ...config};
+};
 
 /**
  * Get a value from the config file.
@@ -44,7 +35,7 @@ const read = () => {
 const get = (key, fallback) => {
     const config = read();
     return config[key] || fallback;
-}
+};
 
 /**
  * Writes all config data to config.json file with 4 space indentation.
@@ -53,7 +44,7 @@ const get = (key, fallback) => {
  */
 const write = (config) => {
     fs.writeFileSync(configFile, JSON.stringify(config, null, 4), "utf8");
-}
+};
 
 /**
  * Set a key to a value in the config file.
@@ -69,14 +60,14 @@ const set = (key, value) => {
         config = {
             ...defaultConfig,
             ...config,
-        }
+        };
     } else {
         config[key] = value;
     }
     write(config);
     emitter.emit("update", config);
     return config;
-}
+};
 
 /**
  * Initialize the config file.
@@ -88,7 +79,7 @@ const init = () => {
     write(defaultConfig);
     emitter.emit("update", defaultConfig);
     return !existed;
-}
+};
 
 export default {
     read: read,
@@ -96,4 +87,4 @@ export default {
     set: set,
     init: init,
     on: emitter.on.bind(emitter),
-}
+};
