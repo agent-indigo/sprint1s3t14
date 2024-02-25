@@ -37,7 +37,7 @@ const read = () => {
         write(filteredEntries);
     }
     return filteredEntries;
-}
+};
 
 /**
  * Writes all tokens/users to disk with 4 space indentation.
@@ -46,7 +46,7 @@ const read = () => {
  */
 const write = (entries) => {
     fs.writeFileSync(tokenFile, JSON.stringify(entries, null, 4), "utf8");
-}
+};
 
 /**
  * Adds and returns a new user and token for a given username.
@@ -69,7 +69,7 @@ const create = (username) => {
         write(entries);
     }
     return [token, in3days];
-}
+};
 
 /**
  * @param key {string} The key to search entries by
@@ -86,12 +86,12 @@ const update = (key, value, data) => {
         entries[entryIndex] = {
             ...entries[entryIndex],
             ...data,
-        }
+        };
         write(entries);
         return true;
     }
     return false;
-}
+};
 
 /**
  * @param key {string} The key to search entries by
@@ -105,11 +105,11 @@ const search = (key, value) => {
         return entries[entryIndex];
     }
     return undefined;
-}
+};
 
 export default {
     get: read,
     create: create,
     update: update,
     search: search,
-}
+};

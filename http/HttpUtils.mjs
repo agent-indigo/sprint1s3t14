@@ -17,4 +17,4 @@ export const isAdmin = (req) => {
     const admins = adminsString.split(",");
     const token = req.cookies.token;
     return admins.includes(token);
-}
+};

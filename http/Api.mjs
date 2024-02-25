@@ -8,11 +8,9 @@ import AsyncHandler from "./AsyncHandler.mjs";
 /**
  * @param server {Express}
  */
-const setup = (server) => {
+export default (server) => {
     server.get("/api/config", express.json(), AsyncHandler(GetConfig));
     server.put("/api/config", express.json(), AsyncHandler(UpdateConfig));
     server.get("/api/token", express.json(), AsyncHandler(GetToken));
     server.post("/api/login", express.json(), AsyncHandler(CreateToken));
 }
-
-export default setup
