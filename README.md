@@ -1,6 +1,7 @@
 # Sprint 1 Javascript · Semester 3 · Team 14
 
 ## Team Members
+
 - [Valentine Ampah](https://github.com/heatherb24)
 - [Heather Bartlett](https://github.com/VK-Ampah)
 - [Brady Green](https://github.com/Brady-G)
@@ -33,21 +34,18 @@ node app --help
 
 ## Logging
 
-Logging in our project is written to files in the `logs` directory. The log files are named based on the date they were created. 
-The log files are plain text files and can be opened with any text editor, and a new log file is created each day. 
+Logging in our project is written to files in the `logs` directory. The log files are named based on the date they were created.
+The log files are plain text files and can be opened with any text editor, and a new log file is created each day.
 Within the log files, the log files name is the date in the format `YYYY-MM-DD.log`, the log contents have the
 following format:
 
-```
-[<timestamp>] (source/loglevel) [log id] log message
-```
+`[<timestamp>] (source/loglevel) [log id] log message`
 
 > Optionally if the log message from an error, the stack trace will be printed below the log message.
 
-##### Example
-```
-[2:51:27:659] (GET /api/config) [e214d157-cf66-4cef-9707-0f3f0be4a60f] Unauthorized user 'test' attempted to access the config.
-```
+## Example
+
+`[2:51:27:659] (GET /api/config) [e214d157-cf66-4cef-9707-0f3f0be4a60f] Unauthorized user 'test' attempted to access the config.`
 
 ## Project Format
 
