@@ -1,5 +1,5 @@
 {
-  "main": "Server.mjs",
+  "main": "server.js",
   "type": "module",
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -13,6 +13,8 @@
     "nodemon": "^3.0.3"
   },
   "scripts": {
-    "start": "nodemon Server"
+    "dev-start": "nodemon server.js",
+    "start": "node server.js",
+    "init": "node app init --all"
   }
 }
