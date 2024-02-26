@@ -1,6 +1,6 @@
 # MIT License
 
-## Copyright (c) 2023 Valentine Ampah, Heather Bartlett, Brady Green, & Braden Hynes
+## Copyright (c) 2024 Valentine Ampah, Heather Bartlett, Brady Green, & Braden Hynes
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
