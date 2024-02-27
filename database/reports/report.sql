@@ -1,19 +1,23 @@
--- Total revenue, orders, customers by year
+-- Total revenue, orders, customers by year and month 
+
 SELECT 
-	 EXTRACT(YEAR FROM order_date) AS year
-	, COUNT(order_id) AS total_orders
-	, SUM(total_amount) AS total_revenue
-	, COUNT(DISTINCT customer_id) AS total_customers
+	 TO_CHAR(order_date, 'YYYY') AS year,
+	 TO_CHAR(order_date, 'Month') AS month,
+	 COUNT(order_id) AS total_orders,
+	 SUM(total_amount) AS total_revenue,
+	 COUNT(DISTINCT customer_id) AS total_customers
 FROM orders
 GROUP BY  
-    EXTRACT(YEAR FROM order_date) 
-ORDER BY  total_revenue ;
+      TO_CHAR(order_date, 'YYYY'),
+      TO_CHAR(order_date, 'Month')
+ORDER BY  total_revenue;
+
 
 -- Get a customer's preferences  for menu items
 SELECT 
-    c.customer_id
-    , m.menu_item_id
-    , COUNT(*) AS total_orders
+     (c.first_name ||' '|| last_name) as customer_name
+    ,m."name" AS menu_name
+    , COUNT(*) AS total_orders_made
 FROM 
 	orders o
 JOIN 
@@ -23,11 +27,12 @@ JOIN
 JOIN 
 	menu_item m USING (menu_item_id) 
 GROUP BY 
-    c.customer_id
+    (c.first_name ||' '|| last_name)
     , m.menu_item_id
-ORDER BY total_orders DESC;
+ORDER BY total_orders_made DESC;
 
---- TOP 2 MOST purchased menu category
+
+--- TOP 2 MOST ordered menu category
 WITH best_selling_menu AS (
 SELECT 
 	mc."name" category_name
@@ -44,8 +49,8 @@ GROUP BY mc."name"
 SELECT 
 *
 , CASE 
-	WHEN category_rank = 1 THEN 'Top selling MENU'
-	WHEN category_rank = 2 THEN 'Second selling MENU'
+	WHEN category_rank = 1 THEN 'Top Ordered Menu Category'
+	WHEN category_rank = 2 THEN 'Second Ordered Menu Category'
   END AS sales_status
 
 FROM best_selling_menu
@@ -56,10 +61,9 @@ WHERE category_rank <= 2
 
 WITH best_selling_menu AS (
     SELECT 
-        mc.name AS category_name
+        mc.name AS menu_category
         ,mi.name AS menu_item
-        ,COUNT(*) AS item_orders
-        ,RANK() OVER (ORDER BY COUNT(*) DESC) AS item_rank
+        ,COUNT(*) AS total_orders_made
     FROM 
         menu_item mi 
     INNER JOIN 
@@ -68,15 +72,27 @@ WITH best_selling_menu AS (
         order_item oi ON mi.menu_item_id = oi.menu_item_id
     GROUP BY 
         mc.name, mi.name -- Group by category and menu item names
-)
+	ORDER BY 
+   		menu_category
+   		, total_orders_made DESC        
+),
+ranked_orders AS
+(
 SELECT 
-    category_name
-    ,menu_item
-    ,item_orders
-FROM 
-    best_selling_menu
-WHERE 
-    item_rank <= 1 -- Select the top 1 selling items
-ORDER BY 
-    item_orders DESC; -- Order by item orders descending to find the best-selling item in each category
+   * 
+   , RANK() OVER (PARTITION BY menu_category ORDER BY total_orders_made DESC) order_rankings-- rank the menu items in each category
+ FROM 
+ 	best_selling_menu
+ )
+ SELECT 
+ 		menu_category
+        ,menu_item
+        ,total_orders_made
+        , CASE
+        	WHEN order_rankings = 1 THEN 'Top Selling Menu'
+          END AS order_status
+ FROM 
+ 	ranked_orders
+ WHERE 
+   order_rankings = 1; -- Select the top 1 selling item withim each category
 
