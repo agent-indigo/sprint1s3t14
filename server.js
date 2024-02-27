@@ -4,6 +4,8 @@ import "dotenv/config";
 import express from "express";
 import Api from "./http/Api.mjs";
 import RouteLogging from "./http/RouteLogging.mjs";
+import path from "path";
+import { mainDir } from "./common/Utils.mjs";
 
 // load environment variables
 const DEBUG = process.env.DEBUG || "false";
@@ -14,6 +16,13 @@ const app = express();
 
 // use express.json & cookieParser
 app.use(express.json(), cookieParser());
+
+app.use("/", express.static(path.join(mainDir, "static"), {
+    "extensions": ["html"]
+}));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(mainDir, "static", "login.html"));
+});
 
 RouteLogging(app);
 Api(app);
