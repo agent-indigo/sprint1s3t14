@@ -1,16 +1,3 @@
--- CREATE TABLE IF NOT EXISTS promotion (
---     promo_code CHAR(6) PRIMARY KEY
---     ,discount DECIMAL(5, 2) NOT NULL
---     ,begin_date DATE NOT NULL
---     ,end_date DATE NOT NULL
---     ,CONSTRAINT check_discount_range CHECK (discount >= 0 AND discount <= 100)
--- );
--- -- alter promotion date field to timestamps
--- ALTER TABLE promotion 
--- ALTER COLUMN begin_date TYPE TIMESTAMP;
--- ALTER TABLE promotion 
--- ALTER COLUMN end_date TYPE TIMESTAMP;
-
 
 -- insert into promotion table
 
@@ -21,12 +8,6 @@ INSERT INTO promotion (promo_code, discount, begin_date, end_date) VALUES
 ('PROMO4', 25.00, now(), now() + INTERVAL '3 WEEKS'),
 ('PROMO5', 30.00, now(), now() + INTERVAL '1 MONTH');
 
--- MENU CATEGORY
--- CREATE TABLE IF NOT EXISTS menu_category (
---     category_id SERIAL PRIMARY KEY,
---     name VARCHAR(50) NOT NULL,
---     description VARCHAR(255) NOT NULL
--- );
 
 INSERT INTO menu_category (name, description)
 VALUES 
