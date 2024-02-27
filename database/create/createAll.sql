@@ -127,6 +127,7 @@ CREATE TABLE public.orders (
 	customer_id int4 NOT NULL,
 	order_date timestamp NOT NULL,
 	description varchar(255) NOT NULL,
+	order_status varchar(50) NOT NULL,
 	total_amount numeric(10, 2) NOT NULL,
 	CONSTRAINT chk_price_positive CHECK ((total_amount > (0)::numeric)),
 	CONSTRAINT orders_pkey PRIMARY KEY (order_id),
@@ -187,6 +188,7 @@ CREATE TABLE public.payment_details (
 	total_amount numeric(10, 2) NULL,
 	payment_method varchar(50) NULL,
 	payment_date timestamp NOT NULL,
+	payment_status varchar(50) NULL,
 	CONSTRAINT payment_details_pkey PRIMARY KEY (payment_id),
 	CONSTRAINT fkey_customer FOREIGN KEY (customer_id) REFERENCES public.customer(customer_id),
 	CONSTRAINT fkey_orders FOREIGN KEY (order_id) REFERENCES public.orders(order_id)
