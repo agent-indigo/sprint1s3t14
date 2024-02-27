@@ -1,21 +1,21 @@
 -- Create combined employee/manager entity
-CREATE TABLE IF NOT EXISTS employee (
-    employee_id SERIAL PRIMARY KEY
-    ,manager_id INT -- Foreign key referencing employee_id (self-referencing)
-    ,address_id INT NOT NULL -- Foreign key referencing address_id in employee_address table
-    ,first_name VARCHAR(50) NOT NULL
-    ,last_name VARCHAR(50) NOT NULL
-    ,role VARCHAR(50) NOT NULL
-    ,hire_date TIMESTAMP NOT NULL
-    ,salary DECIMAL(10, 2)
-    ,employment_status VARCHAR(20) NOT NULL -- Added employment status field
-    ,termination_date DATE -- Optional: Date of termination
-    ,termination_reason VARCHAR(255) -- Optional: Reason for termination
-    ,street VARCHAR(50) NOT NULL
-    ,city VARCHAR(50) NOT NULL
-    ,province VARCHAR(50) NOT NULL
-    ,postal_code VARCHAR(20) NOT NULL
+CREATE TABLE public.employee (
+    employee_id serial4 NOT NULL,
+    manager_id int4 NULL,
+    address_id int4 NOT NULL,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
+    "role" varchar(50) NOT NULL,
+    hire_date timestamp NOT NULL,
+    salary numeric(10, 2) NULL,
+    employment_status varchar(20) NOT NULL,
+    termination_date date NULL,
+    termination_reason varchar(255) NULL,
+    street varchar(50) NOT NULL,
+    city varchar(50) NOT NULL,
+    province varchar(50) NOT NULL,
+    postal_code varchar(20) NOT NULL,
+    CONSTRAINT employee_pkey PRIMARY KEY (employee_id),
+    CONSTRAINT salary_check CHECK ((salary > (0)::numeric)),
+    CONSTRAINT fkey_employee_manager FOREIGN KEY (manager_id) REFERENCES public.employee(employee_id)
 );
--- Add check constraint to ensure salary is positive
-ALTER TABLE employee
-ADD CONSTRAINT salary_check CHECK (salary > 0);
