@@ -4,8 +4,8 @@ SELECT
 	 TO_CHAR(order_date, 'YYYY') AS year,
 	 TO_CHAR(order_date, 'Month') AS month,
 	 COUNT(order_id) AS total_orders,
-	 SUM(total_amount) AS total_revenue,
 	 COUNT(DISTINCT customer_id) AS total_customers
+	 SUM(total_amount) AS total_revenue,
 FROM orders
 GROUP BY  
       TO_CHAR(order_date, 'YYYY'),
@@ -57,7 +57,7 @@ FROM best_selling_menu
 WHERE category_rank <= 2
 ;
 
--- Top selling menu items
+-- Top selling menu items within a category
 
 WITH best_selling_menu AS (
     SELECT 

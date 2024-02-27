@@ -1,4 +1,8 @@
 -- Purpose: Create all tables in the database.
+-- This script is used to create all the tables in the database.
+
+-- create database
+CREATE DATABASE sideside_restaurant;
 
 -- create employee table
 CREATE TABLE public.employee (
