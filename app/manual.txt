@@ -1,21 +1,21 @@
-helpdesk <command> <option>
+app <command> <option>
 
 Usage:
 
-helpdesk --help                                     Displays this help
+app --help                                     Displays this help
 
-helpdesk init --all                                 Creates the folder structure and the config and help files
-helpdesk init --dir                                 Creates the folder structure
-helpdesk init --conf                                Creates the config file with default settings and help files
+app init --all                                 Creates the folder structure and the config and help files
+app init --dir                                 Creates the folder structure
+app init --conf                                Creates the config file with default settings and help files
 
-helpdesk config --show                              Displays a list of the current config settings
-helpdesk config --reset                             Resets the config file with default settings
-helpdesk config --set <option> <value>              Sets a specific config setting
+app config --show                              Displays a list of the current config settings
+app config --reset                             Resets the config file with default settings
+app config --set <option> <value>              Sets a specific config setting
 
-helpdesk token --list                              Lists all tokens
-helpdesk token --new <username>                     Generates a token for a given username and adds it to the JSON database
-helpdesk token --update phone <username> <phone>    Updates the JSON entry with a new phone number
-helpdesk token --update email <username> <phone>    Updates the JSON entry with a new email address
-helpdesk token --search user <username>             Fetches a token for a given username
-helpdesk token --search email <email>               Fetches a token for a given email address
-helpdesk token --search phone <phone>               Fetches a token for a given phone number
+app token --list                               Lists all tokens
+app token --new <username>                     Generates a token for a given username and adds it to the JSON database
+app token --update phone <username> <phone>    Updates the JSON entry with a new phone number
+app token --update email <username> <phone>    Updates the JSON entry with a new email address
+app token --search user <username>             Fetches a token for a given username
+app token --search email <email>               Fetches a token for a given email address
+app token --search phone <phone>               Fetches a token for a given phone number
