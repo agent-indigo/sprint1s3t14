@@ -71,13 +71,16 @@ const set = (key, value) => {
 
 /**
  * Initialize the config file.
+ * @param [ifExists] {boolean} Force the creation of the config file even if it already exists.
  * @return boolean True if the config file was created, false if it already existed.
  * @throws {Error} Will throw an error if the config directory was not created.
  */
-const init = () => {
+const init = (ifExists) => {
     const existed = fs.existsSync(configFile);
-    write(defaultConfig);
-    emitter.emit("update", defaultConfig);
+    if (ifExists || !existed) {
+        write(defaultConfig);
+        emitter.emit("update", defaultConfig);
+    }
     return !existed;
 };
 

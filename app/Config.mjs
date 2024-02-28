@@ -10,7 +10,7 @@ const show = () => {
 };
 
 const reset = () => {
-    ConfigHandler.init();
+    ConfigHandler.init(true);
     console.log("Config reset to default.");
 };
 
