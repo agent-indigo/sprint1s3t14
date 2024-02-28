@@ -1,5 +1,7 @@
 -- Total revenue, orders, customers by year and month 
 
+--
+CREATE OR REPLACE VIEW order_summary_view AS
 SELECT 
 	 TO_CHAR(order_date, 'YYYY') AS year,
 	 TO_CHAR(order_date, 'Month') AS month,
@@ -12,10 +14,12 @@ GROUP BY
       TO_CHAR(order_date, 'Month')
 ORDER BY  total_revenue;
 
-
 -- Get a customer's preferences  for menu items
+CREATE OR REPLACE VIEW customer_preference AS
 SELECT 
+--   c.customer_id
      (c.first_name ||' '|| last_name) as customer_name
+--    , m.menu_item_id
     ,m."name" AS menu_name
     , COUNT(*) AS total_orders_made
 FROM 
@@ -27,12 +31,14 @@ JOIN
 JOIN 
 	menu_item m USING (menu_item_id) 
 GROUP BY 
+--    c.customer_id
     (c.first_name ||' '|| last_name)
     , m.menu_item_id
 ORDER BY total_orders_made DESC;
 
-
+--DROP VIEW top_sold_menu_categories;
 --- TOP 2 MOST ordered menu category
+CREATE OR REPLACE VIEW top_sold_menu_categories AS
 WITH best_selling_menu AS (
 SELECT 
 	mc."name" category_name
@@ -47,7 +53,8 @@ INNER JOIN
 GROUP BY mc."name" 
 )
 SELECT 
-*
+category_name
+,total_orders
 , CASE 
 	WHEN category_rank = 1 THEN 'Top Ordered Menu Category'
 	WHEN category_rank = 2 THEN 'Second Ordered Menu Category'
@@ -58,7 +65,7 @@ WHERE category_rank <= 2
 ;
 
 -- Top selling menu items
-
+CREATE VIEW top_menu_items_per_category AS
 WITH best_selling_menu AS (
     SELECT 
         mc.name AS menu_category
@@ -80,7 +87,7 @@ ranked_orders AS
 (
 SELECT 
    * 
-   , RANK() OVER (PARTITION BY menu_category ORDER BY total_orders_made DESC) order_rankings-- rank the menu items in each category
+   , RANK() OVER (PARTITION BY menu_category ORDER BY total_orders_made DESC) order_rankings
  FROM 
  	best_selling_menu
  )
@@ -90,9 +97,9 @@ SELECT
         ,total_orders_made
         , CASE
         	WHEN order_rankings = 1 THEN 'Top Selling Menu'
-          END AS order_status
+        END AS order_status
  FROM 
  	ranked_orders
  WHERE 
-   order_rankings = 1; -- Select the top 1 selling item withim each category
+   order_rankings = 1; -- Select the top 1 selling item withom each category
 
