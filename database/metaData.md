@@ -204,3 +204,11 @@
   - `fkey_orders` on `purchases.order_id` referencing `orders.order_id`
   - `fkey_customer` on `payment_details.customer_id` referencing `customer.customer_id`
   - `fkey_orders` on `payment_details.order_id` referencing `orders.order_id`
+
+- **Created Indexes**
+- `pkey_menu_ingredients`
+- `unique_ingredient_name`
+- `menu_category_index`
+- `menu_item_index`
+- `order_status_index`
+- `payment_status_index`
