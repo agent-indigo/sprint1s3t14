@@ -38,6 +38,14 @@
 14. **purchases**: Tracks purchases made by customers, including payment details, quantity purchased, total amount, and any discounts applied.
 15. **payment_details**: Records payment details for orders, including the payment method, total amount, and associated customer and order.
 
+### SALES REPORT VIEWS
+1. **order_summary_view**: Stores details about total orders, customers and revenue by year and month
+2. **customer_preference**: Stores details about customer's preferences  for menu items
+3. **top_sold_menu_categories**: Stores details about the TOP 2 most ordered menu category
+4. **top_menu_items_per_category**: Stores details about Top selling menu items within each menu category
+
+
+
 ### ENTITY SCHEMA
 1. **employee**
    - `employee_id` (Serial): Primary key, unique identifier for an employee.

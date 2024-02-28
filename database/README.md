@@ -9,4 +9,4 @@
 - the `metaData.md` contains meta data about the database
 
 ### Back Up and Restore
-- the `db_backup_restore` directory contains the database back up files both as a directory and folder files for convenience and a `.tar` file
+- the `db_backup_restore` directory contains the database back up file used to `seaside_restaurant-202402271825.tar` file
